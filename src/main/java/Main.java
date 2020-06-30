@@ -6,8 +6,9 @@ import org.apache.spark.sql.SparkSession;
 public class Main {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder().master("yarn").appName("Application").enableHiveSupport().getOrCreate();
-        Dataset<Row> ds = spark.read()
-                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/hotels_weather_joined");
+        Dataset<Row> ds = spark.read().option("header", "false")
+                .csv("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/hotels_weather_joined");
+
 
         long count= ds.count();
                 System.out.println("count=" +count);
