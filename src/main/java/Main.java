@@ -9,7 +9,7 @@ public class Main {
         Dataset<Row> ds = spark.read()
                 .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/hotels_weather_joined");
 
-        int count= ds.count()
+        long count= ds.count();
                 System.out.println("count=" +count);
 
         spark.stop();
