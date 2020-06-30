@@ -15,6 +15,12 @@ public class Main {
         long counte= expedia.count();
                 System.out.println("count hotels_weather_joined=" +counth);
                 System.out.println("count expedia=" +counte);
+        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
+                .join(expedia, hotels_weather_joined.col("id").equalTo(expedia.col("id"));
+
+        long countexp= expedia_hotels_weather_joined.count();
+        System.out.println("count joined=" +countexp);
+
 
         spark.stop();
     }
