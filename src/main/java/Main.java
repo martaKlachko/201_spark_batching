@@ -15,21 +15,23 @@ public class Main {
                 .withColumn("Longitude_rounded", functions.round(hotels.col("Longitude"), 3));
         Dataset<Row> weather = spark.read()
                 .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_weather/*");
+        Dataset<Row>   weather_rounded= weather.withColumn("lat_rounded", functions.round(weather.col("lat"), 3))
+                .withColumn("lng_rounded", functions.round(weather.col("lng"), 3));
         Dataset<Row> expedia = spark.read().format("com.databricks.spark.avro").option("header", "true")
                 .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia");
 
 //        long counth= hotels_weather_joined.count();
 //        long counte= expedia.count();
         System.out.println(" hotels=");
-        hotels.printSchema();
+        hotels_rounded.printSchema();
         System.out.println(" expedia=");
         expedia.printSchema();
         System.out.println(" weather=");
-        weather.printSchema();
+        weather_rounded.printSchema();
 
        Dataset<Row> hotels_weather_joined = hotels_rounded
-              .join(weather, hotels_rounded.col("Latitude_rounded").equalTo(weather.col("lat"))
-                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather.col("lng"))));
+              .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
+                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
       System.out.println("count joined=" +hotels_weather_joined.count());
 
