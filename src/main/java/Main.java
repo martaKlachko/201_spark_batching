@@ -29,11 +29,11 @@ public class Main {
         System.out.println(" weather=");
         weather_rounded.printSchema();
 
-       Dataset<Row> hotels_weather_joined = hotels_rounded
+       Row[] hotels_weather_joined = hotels_rounded
               .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded")))).collect();
 
-      System.out.println("count joined=" +hotels_weather_joined.count());
+      System.out.println("count joined=" +hotels_weather_joined.length);
 
 
         spark.stop();
