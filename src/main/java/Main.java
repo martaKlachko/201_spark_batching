@@ -30,8 +30,8 @@ public class Main {
               .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
                       .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
-      System.out.println("count joined=" +hotels_weather_joined.count());
-
+      System.out.println("count joined=" );
+        hotels_weather_joined.show(10);
 
         spark.stop();
     }
