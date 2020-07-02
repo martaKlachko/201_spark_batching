@@ -20,18 +20,17 @@ public class Main {
         Dataset<Row> expedia = spark.read().format("com.databricks.spark.avro").option("header", "true")
                 .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia");
 
-//        long counth= hotels_weather_joined.count();
-//        long counte= expedia.count();
-        System.out.println(" hotels=");
-        hotels_rounded.limit(10).show();
-        System.out.println(" weather=");
-        weather_rounded.limit(10).show();
-
-//       long  hotels_weather_joined = hotels_rounded
-//              .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-//                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded")))).count();
 //
-//      System.out.println("count joined=" +hotels_weather_joined);
+//        System.out.println(" hotels=");
+//        hotels_rounded.limit(10).show();
+//        System.out.println(" weather=");
+//        weather_rounded.limit(10).show();
+
+       Dataset<Row>  hotels_weather_joined = hotels_rounded
+              .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
+                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+
+      System.out.println("count joined=" +hotels_weather_joined.count());
 
 
         spark.stop();
