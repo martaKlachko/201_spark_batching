@@ -22,10 +22,10 @@ public class Main {
 
 //        long counth= hotels_weather_joined.count();
 //        long counte= expedia.count();
-        System.out.println(" hotels="+hotels_rounded.take(10));
-
-        System.out.println(" weather="+weather_rounded.take(10));
-
+        System.out.println(" hotels=");
+        hotels_rounded.limit(10).show();
+        System.out.println(" weather=");
+        weather_rounded.limit(10).show();
 
 //       long  hotels_weather_joined = hotels_rounded
 //              .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
