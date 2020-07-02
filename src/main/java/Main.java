@@ -11,12 +11,12 @@ public class Main {
         Dataset<Row> hotels = spark.read().option("header", "true")
                 .csv("hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
 
-        Dataset<Row>   hotels_rounded= hotels.withColumn("Latitude_rounded", functions.round(hotels.col("Latitude"), 3))
-                .withColumn("Longitude_rounded", functions.round(hotels.col("Longitude"), 3));
+        Dataset<Row>   hotels_rounded= hotels.withColumn("Latitude_rounded", functions.round(hotels.col("Latitude"), 2))
+                .withColumn("Longitude_rounded", functions.round(hotels.col("Longitude"), 2));
         Dataset<Row> weather = spark.read()
                 .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_weather/*");
-        Dataset<Row>   weather_rounded= weather.withColumn("lat_rounded", functions.round(weather.col("lat"), 3))
-                .withColumn("lng_rounded", functions.round(weather.col("lng"), 3));
+        Dataset<Row>   weather_rounded= weather.withColumn("lat_rounded", functions.round(weather.col("lat"), 2))
+                .withColumn("lng_rounded", functions.round(weather.col("lng"), 2));
         Dataset<Row> expedia = spark.read().format("com.databricks.spark.avro").option("header", "true")
                 .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia");
 
