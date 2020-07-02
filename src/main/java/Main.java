@@ -22,11 +22,11 @@ public class Main {
         System.out.println(" weather=");
         weather.printSchema();
 
-//        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
-//                .join(expedia, hotels_weather_joined.col("id").equalTo(expedia.col("id")));
-//
-//        long countexp= expedia_hotels_weather_joined.count();
-//        System.out.println("count joined=" +countexp);
+       Dataset<Row> hotels_weather_joined = hotels
+              .join(weather, hotels.col("Latitude").equalTo(weather.col("lat"))
+                      .and(hotels.col("Longitude").equalTo(weather.col("lng"))));
+       
+      System.out.println("count joined=" +hotels_weather_joined.count());
 
 
         spark.stop();
