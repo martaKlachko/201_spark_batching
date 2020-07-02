@@ -102,7 +102,7 @@
             <version>2.4.3</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.spark</groupId>
+            <groupId>com.databricks</groupId>
             <artifactId>spark-avro_2.11</artifactId>
             <version>3.2.0</version>
         </dependency>
