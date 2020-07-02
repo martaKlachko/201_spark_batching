@@ -6,19 +6,21 @@ import org.apache.spark.sql.SparkSession;
 public class Main {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder().master("yarn").appName("Application").enableHiveSupport().getOrCreate();
-        Dataset<Row> hotels_weather_joined = spark.read().option("header", "false")
-                .csv("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/hotels_weather_joined");
-        Dataset<Row> expedia = spark.read().format("com.databricks.spark.avro").option("header","true")
+        Dataset<Row> hotels = spark.read().option("header", "true")
+                .csv("hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
+        Dataset<Row> weather = spark.read()
+                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_weather/*");
+        Dataset<Row> expedia = spark.read().format("com.databricks.spark.avro").option("header", "true")
                 .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia");
 
 //        long counth= hotels_weather_joined.count();
 //        long counte= expedia.count();
-                System.out.println(" hotels_weather_joined=" );
-
-
-                hotels_weather_joined.printSchema();
-                System.out.println(" expedia=" );
-                 expedia.printSchema();
+        System.out.println(" hotels=");
+        hotels.printSchema();
+        System.out.println(" expedia=");
+        expedia.printSchema();
+        System.out.println(" weather=");
+        weather.printSchema();
 
 //        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
 //                .join(expedia, hotels_weather_joined.col("id").equalTo(expedia.col("id")));
