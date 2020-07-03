@@ -30,11 +30,11 @@ public class Main {
               .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
                       .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
-        Dataset<Row>  expedia_hotels_weather_joined = hotels_rounded
-                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
+//        Dataset<Row>  expedia_hotels_weather_joined = hotels_rounded
+//                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
 
 //      System.out.println("count joined=" );
-        expedia_hotels_weather_joined.show(10);
+        hotels_weather_joined.show(10);
 
         spark.stop();
     }
