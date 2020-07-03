@@ -7,7 +7,8 @@ import org.apache.spark.sql.functions;
 public class Main {
 
     public static void main(String[] args) {
-        SparkSession spark = SparkSession.builder().master("yarn").appName("Application").enableHiveSupport().getOrCreate();
+        SparkSession spark = SparkSession.builder().master("yarn").appName("Application")
+                .config("spark.jars", "/home/maria_dev/201_spark_batching/target/201_project_batching-1.0-SNAPSHOT.jar").enableHiveSupport().getOrCreate();
         Dataset<Row> hotels = spark.read().option("header", "true")
                 .csv("hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
 
