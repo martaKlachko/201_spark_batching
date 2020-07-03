@@ -28,7 +28,8 @@ public class Main {
 
        Dataset<Row>  hotels_weather_joined = hotels_rounded
               .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+                      .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))))
+               .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
 
 //        Dataset<Row>  expedia_hotels_weather_joined = hotels_rounded
 //                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
