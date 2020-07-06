@@ -34,7 +34,7 @@ public class Main {
                         .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
         Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
-                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
+                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
 
 //      System.out.println("count joined=" );
         expedia_hotels_weather_joined.show(10);
