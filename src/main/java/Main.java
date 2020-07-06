@@ -22,7 +22,7 @@ public class Main {
                 .withColumn("lng_rounded", functions.round(weather.col("lng"), 2));
         Dataset<Row> expedia = spark.read()
                 .format("com.databricks.spark.avro")
-                .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia/*");
+                .load("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia/*");
 
 //
 //        System.out.println(" hotels=");
