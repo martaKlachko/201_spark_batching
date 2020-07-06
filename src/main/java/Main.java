@@ -21,7 +21,7 @@ public class Main {
         Dataset<Row> weather_rounded = weather.withColumn("lat_rounded", functions.round(weather.col("lat"), 2))
                 .withColumn("lng_rounded", functions.round(weather.col("lng"), 2));
         Dataset<Row> expedia = spark.read()
-                .format("avro")
+                .format("com.databricks.spark.avro")
                 .load("hdfs://sandbox-hdp.hortonworks.com:8020/apps/hive/warehouse/expedia/*");
 
 //
