@@ -55,7 +55,7 @@
                                     <version>3.2.0</version>
                                     <type>jar</type>
                                     <overWrite>false</overWrite>
-<!--                                    <outputDirectory>/jars</outputDirectory>-->
+                                    <outputDirectory>/home/maria_dev/201_spark_batching/jars</outputDirectory>
 
                                 </artifactItem>
                             </artifactItems>
