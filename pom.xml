@@ -56,7 +56,6 @@
                                     <type>jar</type>
                                     <overWrite>false</overWrite>
                                     <outputDirectory>/usr/hdp/current/spark2-client/jars </outputDirectory>
-
                                 </artifactItem>
                             </artifactItems>
                             <!-- other configurations here -->
