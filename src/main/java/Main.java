@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder()
-               
+
                  .config("spark.jars", "/home/maria_dev/201_spark_batching/target/201_project_batching-1.0-SNAPSHOT.jar")
                 .enableHiveSupport().getOrCreate();
         Dataset<Row> hotels = spark.read().option("header", "true")
@@ -33,7 +33,7 @@ public class Main {
                 .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
                         .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
-        Dataset<Row> expedia_hotels_weather_joined = hotels_rounded
+        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
                 .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
 
 //      System.out.println("count joined=" );
