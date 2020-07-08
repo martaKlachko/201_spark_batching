@@ -30,18 +30,24 @@ public class Main {
 //        System.out.println(" weather=");
 //        weather_rounded.limit(10).show();
 
-        Dataset<Row> hotels_weather_joined = hotels_rounded
-                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+//        Dataset<Row> hotels_weather_joined = hotels_rounded
+//                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
+//                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
 
 //       hotels_weather_joined.limit(10).show();
         //  expedia.limit(10).show();
 
-        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
-                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
+        Dataset<Row> expedia_hotels_joined = hotels_rounded
+                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
+
+        System.out.println("count hotels=");
+        System.out.println(hotels_rounded.count());
+
+        System.out.println("count expedia=");
+        System.out.println(expedia.count());
 
         System.out.println("count joined=");
-        System.out.println(expedia_hotels_weather_joined.count());
+        System.out.println(expedia_hotels_joined.count());
 
         spark.stop();
     }
