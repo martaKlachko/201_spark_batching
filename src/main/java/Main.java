@@ -38,7 +38,7 @@ public class Main {
         //  expedia.limit(10).show();
 
         Dataset<Row> expedia_hotels_joined = hotels_rounded
-                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("id")));
+                .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("hotel_id")));
 
         System.out.println("count hotels=");
         System.out.println(hotels_rounded.count());
