@@ -49,7 +49,9 @@ public class Main {
         System.out.println("count joined=");
         System.out.println(expedia_hotels_joined.count());
 
-        expedia_hotels_joined.orderBy("hotel_id","srch_ci").show(5);
+        expedia_hotels_joined.withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
+                .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
+                .orderBy("hotel_id","srch_ci_date").show(5);
 
         spark.stop();
     }
