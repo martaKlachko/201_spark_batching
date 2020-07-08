@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder()
 
-                 .config("spark.jars", "/home/maria_dev/201_spark_batching/target/201_project_batching-1.0-SNAPSHOT.jar")
+                .config("spark.jars", "/home/maria_dev/201_spark_batching/target/201_project_batching-1.0-SNAPSHOT.jar")
                 .enableHiveSupport().getOrCreate();
         Dataset<Row> hotels = spark.read().option("header", "true")
                 .csv("hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
@@ -30,18 +30,18 @@ public class Main {
 //        System.out.println(" weather=");
 //        weather_rounded.limit(10).show();
 
-//        Dataset<Row> hotels_weather_joined = hotels_rounded
-//                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-//                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
-//
+        Dataset<Row> hotels_weather_joined = hotels_rounded
+                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
+                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+
 //       hotels_weather_joined.limit(10).show();
-        expedia.limit(10).show();
+        //  expedia.limit(10).show();
 
-//        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
-//                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
+        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
+                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
 
-//      System.out.println("count joined=" );
-//        expedia_hotels_weather_joined.show(10);
+        System.out.println("count joined=");
+        expedia_hotels_weather_joined.show(10);
 
         spark.stop();
     }
