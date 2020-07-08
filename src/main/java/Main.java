@@ -30,18 +30,18 @@ public class Main {
 //        System.out.println(" weather=");
 //        weather_rounded.limit(10).show();
 
-        Dataset<Row> hotels_weather_joined = hotels_rounded
-                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
-                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
-
-       hotels_weather_joined.limit(10).show();
+//        Dataset<Row> hotels_weather_joined = hotels_rounded
+//                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
+//                        .and(hotels_rounded.col("Longitude_rounded").equalTo(weather_rounded.col("lng_rounded"))));
+//
+//       hotels_weather_joined.limit(10).show();
         expedia.limit(10).show();
 
-        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
-                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
+//        Dataset<Row> expedia_hotels_weather_joined = hotels_weather_joined
+//                .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
 
 //      System.out.println("count joined=" );
-        expedia_hotels_weather_joined.show(10);
+//        expedia_hotels_weather_joined.show(10);
 
         spark.stop();
     }
