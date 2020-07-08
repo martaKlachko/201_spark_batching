@@ -40,14 +40,16 @@ public class Main {
         Dataset<Row> expedia_hotels_joined = hotels_rounded
                 .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("hotel_id")));
 
-        System.out.println("count hotels=");
-        System.out.println(hotels_rounded.count());
-
-        System.out.println("count expedia=");
-        System.out.println(expedia.count());
+//        System.out.println("count hotels=");
+//        System.out.println(hotels_rounded.count());
+//
+//        System.out.println("count expedia=");
+//        System.out.println(expedia.count());
 
         System.out.println("count joined=");
         System.out.println(expedia_hotels_joined.count());
+
+        expedia_hotels_joined.orderBy("hotel_id","srch_ci").show(5);
 
         spark.stop();
     }
