@@ -41,7 +41,7 @@ public class Main {
                 .join(expedia, hotels_weather_joined.col("Id").equalTo(expedia.col("id")));
 
         System.out.println("count joined=");
-        expedia_hotels_weather_joined.show(10);
+        System.out.println(expedia_hotels_weather_joined.count());
 
         spark.stop();
     }
