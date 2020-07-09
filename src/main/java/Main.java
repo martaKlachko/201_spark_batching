@@ -48,7 +48,7 @@ public class Main {
 
         Dataset<Row> df2 = df
                 .withColumn("diff", functions.datediff(df.col("lag_day"),df.col("srch_ci_date")))
-                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "idle_days");
+                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day");
 
                 df2.show(20);
 
