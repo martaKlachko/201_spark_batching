@@ -43,7 +43,8 @@ public class Main {
                 .withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
                 .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
                 .orderBy("hotel_id", "srch_ci_date")
-                .withColumn("idle_days", functions.lag("srch_ci_date", 1, 0).over(window))
+                .withColumn("idle_days", functions.lag("srch_ci_date", 1)
+                        .over(window))
                 .select("hotel_id", "srch_ci_date", "srch_co_date", "idle_days").show(20);
 
 
