@@ -39,7 +39,7 @@ public class Main {
 
         WindowSpec window  = Window.partitionBy("hotel_id").orderBy("hotel_id");
 
-        expedia_hotels_joined
+        expedia
                 .withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
                 .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
                 .orderBy("hotel_id", "srch_ci_date")
