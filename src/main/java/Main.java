@@ -39,13 +39,18 @@ public class Main {
 
         WindowSpec window  = Window.partitionBy("hotel_id").orderBy("hotel_id");
 
-        expedia
+        Dataset<Row> df = expedia
                 .withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
                 .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
                 .orderBy("hotel_id", "srch_ci_date")
-                .withColumn("idle_days", functions.lag("srch_ci_date", 1)
-                        .over(window))
-                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "idle_days").show(20);
+                .withColumn("lag_day", functions.lag("srch_ci_date", 1)
+                        .over(window));
+
+        Dataset<Row> df2 = df
+                .withColumn("diff", functions.datediff(df.col("lag_day"),df.col("srch_ci_date")))
+                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "idle_days");
+
+                df2.show(20);
 
 
         spark.stop();
