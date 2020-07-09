@@ -45,7 +45,7 @@ public class Main {
                 .orderBy("hotel_id", "srch_ci_date")
                 .withColumn("idle_days", functions.lag("srch_ci_date", 1)
                         .over(window))
-                .select("hotel_id", "srch_ci_date", "srch_co_date", "idle_days").show(20);
+                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "idle_days").show(20);
 
 
         spark.stop();
