@@ -49,9 +49,11 @@ public class Main {
         Dataset<Row> df2 = df
                 .withColumn("diff", functions.datediff(df.col("lag_day"),df.col("srch_ci_date")))
                 .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
-                .where(df.col("diff").isNotNull().or(df.col("diff").notEqual(0)));
 
-                df2.show();
+        Dataset<Row> df3 = df
+                .where(df2.col("diff").isNotNull().or(df2.col("diff").notEqual(0)));
+
+                df3.show();
 
 
         spark.stop();
