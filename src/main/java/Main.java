@@ -51,7 +51,7 @@ public class Main {
                 .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff");
 
         Dataset<Row> df3 = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
-                .where(df2.col("diff").isNotNull().and(df2.col("diff").$greater(0)));
+                .where(df2.col("diff").isNotNull().and(df2.col("diff").$greater(2)));
 
                 df3.show();
 
