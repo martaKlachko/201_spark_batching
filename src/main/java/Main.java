@@ -46,15 +46,21 @@ public class Main {
 
         Dataset<Row> df2 = df
                 .withColumn("diff", functions.datediff(df.col("srch_ci_date"), df.col("lag_day")))
-                .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff");
+                .select("*").persist();
 
-        Dataset<Row> df3 = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
+        Dataset<Row> incorrect_data = df2.select("*")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
                                 .and(df2.col("diff").$less(30))));
 
-        df3.show();
+        incorrect_data.show();
 
+        Dataset<Row> correct_data = df2.select("*")
+                .where(df2.col("diff").isNull()
+                        .or(df2.col("diff").$less(2)
+                                .or(df2.col("diff").$greater(30))));
+
+        correct_data.show();
 
         spark.stop();
     }
