@@ -53,14 +53,18 @@ public class Main {
                         .and(df2.col("diff").$greater(2)
                                 .and(df2.col("diff").$less(30))));
 
-        incorrect_data.show();
+        //incorrect_data.show();
 
         Dataset<Row> correct_data = df2.select("*")
                 .where(df2.col("diff").isNull()
                         .or(df2.col("diff").$less(2)
                                 .or(df2.col("diff").$greater(30))));
 
-        correct_data.show();
+        //correct_data.show();
+
+        incorrect_data.join(hotels_rounded, incorrect_data.col("hotel_id").equalTo(hotels_rounded.col("id")))
+        .select("name", "address", "country").distinct().show();
+
 
         spark.stop();
     }
