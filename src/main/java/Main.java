@@ -35,27 +35,25 @@ public class Main {
                 .join(expedia, hotels_rounded.col("Id").equalTo(expedia.col("hotel_id")));
 
 
-
-
-        WindowSpec window  = Window.partitionBy("hotel_id").orderBy("hotel_id");
+        WindowSpec window = Window.partitionBy("hotel_id").orderBy("hotel_id");
 
         Dataset<Row> df = expedia
                 .withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
                 .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
                 .orderBy("hotel_id", "srch_ci_date")
-                .withColumn("lag_day", functions.lag("srch_ci_date", 1)
+                .withColumn("lag_day", functions.lag("id", 1)
                         .over(window));
 
         Dataset<Row> df2 = df
-                .withColumn("diff", functions.datediff(df.col("srch_ci_date"),df.col("lag_day")))
+                .withColumn("diff", functions.datediff(df.col("srch_ci_date"), df.col("lag_day")))
                 .select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff");
 
         Dataset<Row> df3 = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
-                        .and(df2.col("diff").$less(30))));
+                                .and(df2.col("diff").$less(30))));
 
-                df3.show();
+        df3.show();
 
 
         spark.stop();
