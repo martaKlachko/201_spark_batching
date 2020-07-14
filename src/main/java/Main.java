@@ -48,22 +48,22 @@ public class Main {
                 .withColumn("diff", functions.datediff(df.col("srch_ci_date"), df.col("lag_day")))
                 .select("*").persist();
 
-        Dataset<Row> incorrect_data = df2.select("*")
+        Dataset<Row> incorrect_data = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
                                 .and(df2.col("diff").$less(30))));
 
-        //incorrect_data.show();
+        incorrect_data.show();
 
-        Dataset<Row> correct_data = df2.select("*")
+        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
                 .where(df2.col("diff").isNull()
                         .or(df2.col("diff").$less(2)
                                 .or(df2.col("diff").$greater(30))));
 
-        //correct_data.show();
+        correct_data.show();
 
-        incorrect_data.join(hotels_rounded, incorrect_data.col("hotel_id").equalTo(hotels_rounded.col("id")))
-        .select("name", "address", "country").distinct().show();
+//        incorrect_data.join(hotels_rounded, incorrect_data.col("hotel_id").equalTo(hotels_rounded.col("id")))
+//        .select("name", "address", "country").distinct().show();
 
 
         spark.stop();
