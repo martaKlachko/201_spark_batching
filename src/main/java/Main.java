@@ -48,6 +48,8 @@ public class Main {
                 .withColumn("diff", functions.datediff(df.col("srch_ci_date"), df.col("lag_day")))
                 .select("*").persist();
 
+        df2.select("id", "hotel_id","date_time", "srch_ci_date", "srch_co_date", "lag_day", "diff").show(20);
+
         Dataset<Row> incorrect_data = df2.select("id", "hotel_id", "srch_ci_date", "srch_co_date", "lag_day", "diff")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
