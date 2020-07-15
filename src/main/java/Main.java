@@ -40,7 +40,7 @@ public class Main {
         Dataset<Row> df = expedia
                 .withColumn("srch_ci_date", expedia_hotels_joined.col("srch_ci").cast("date"))
                 .withColumn("srch_co_date", expedia_hotels_joined.col("srch_co").cast("date"))
-                .orderBy("hotel_id", "id")
+                .orderBy("hotel_id", "date_time")
                 .withColumn("lag_day", functions.lag("srch_ci_date", 1)
                         .over(window));
 
