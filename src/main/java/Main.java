@@ -19,7 +19,7 @@ public class Main {
                 .withColumn("Longitude_rounded", functions.round(hotels.col("Longitude"), 2));
 
         Dataset<Row> weather = spark.read()
-                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_weather/*");
+                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_weather");
         Dataset<Row> weather_rounded = weather.withColumn("lat_rounded", functions.round(weather.col("lat"), 2))
                 .withColumn("lng_rounded", functions.round(weather.col("lng"), 2));
 
