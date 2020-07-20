@@ -25,7 +25,7 @@ public class Main {
 
         Dataset<Row> expedia = spark.read()
                 .format("com.databricks.spark.avro")
-                .load("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia/*");
+                .load("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia");
 
 //      Dataset<Row> hotels_weather_joined = hotels_rounded
 //                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
