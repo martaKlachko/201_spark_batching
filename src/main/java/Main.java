@@ -55,21 +55,23 @@ public class Main {
                 .withColumn("diff", functions.datediff(df.col("srch_ci"), df.col("lag_day")))
                 .select("*").persist();
 
-        df2.select("id", "hotel_id","date_time", "srch_ci", "srch_co", "lag_day", "diff").show(20);
+        df2.select("id", "hotel_id", "date_time", "srch_ci", "srch_co", "lag_day", "diff").show(20);
 
         Dataset<Row> incorrect_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
                                 .and(df2.col("diff").$less(30))));
 
-        incorrect_data.show();
+       // incorrect_data.show();
 
-        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
-                .where(df2.col("diff").isNull()
-                        .or(df2.col("diff").$less(2)
-                                .or(df2.col("diff").$greater(30))));
+        incorrect_data.join(expedia, incorrect_data.col("hotel_id").equalTo(expedia.col("id"))).select("*").show(20);
 
-        correct_data.show();
+//        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+//                .where(df2.col("diff").isNull()
+//                        .or(df2.col("diff").$less(2)
+//                                .or(df2.col("diff").$greater(30))));
+
+      //  correct_data.show();
 
 //        incorrect_data.join(hotels_rounded, incorrect_data.col("hotel_id").equalTo(hotels_rounded.col("id")))
 //        .select("name", "address", "country").distinct().show();
