@@ -25,7 +25,7 @@ public class Main {
 
         Dataset<Row> expedia = spark.read()
                 .format("com.databricks.spark.avro")
-                .load("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia");
+                .load("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia").persist();
 
 //      Dataset<Row> hotels_weather_joined = hotels_rounded
 //                .join(weather_rounded, hotels_rounded.col("Latitude_rounded").equalTo(weather_rounded.col("lat_rounded"))
@@ -60,17 +60,22 @@ public class Main {
         Dataset<Row> incorrect_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
                 .where(df2.col("diff").isNotNull()
                         .and(df2.col("diff").$greater(2)
-                                .and(df2.col("diff").$less(30))));
+                                .and(df2.col("diff").$less(30)))).persist();
 
        // incorrect_data.show();
 
         incorrect_data.join(hotels, incorrect_data.col("hotel_id").equalTo(hotels.col("id")))
                 .select("Name", "country", "city", "address").distinct().show(20);
 
-//        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
-//                .where(df2.col("diff").isNull()
-//                        .or(df2.col("diff").$less(2)
-//                                .or(df2.col("diff").$greater(30))));
+        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+                .where(df2.col("diff").isNull()
+                        .or(df2.col("diff").$less(2)
+                                .or(df2.col("diff").$greater(30)))).persist();
+
+        Dataset<Row> correct_group_by_country = correct_data.join(hotels, incorrect_data.col("hotel_id").equalTo(hotels.col("id")))
+                .groupBy("country").agg(functions.count("id").as("count"));
+
+        correct_group_by_country.show();
 
       //  correct_data.show();
 
