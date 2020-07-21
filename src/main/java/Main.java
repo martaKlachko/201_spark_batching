@@ -72,7 +72,8 @@ public class Main {
                         .or(df2.col("diff").$less(2)
                                 .or(df2.col("diff").$greater(30)))).persist();
 
-        Dataset<Row> correct_group_by_country = correct_data.join(hotels, incorrect_data.col("hotel_id").equalTo(hotels.col("id")))
+        Dataset<Row> correct_group_by_country = correct_data.withColumnRenamed("id", "data_id")
+                .join(hotels, incorrect_data.col("hotel_id").equalTo(hotels.col("id")))
                 .groupBy("country").agg(functions.count("id").as("count"));
 
         correct_group_by_country.show();
