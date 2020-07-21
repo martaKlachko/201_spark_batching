@@ -64,7 +64,7 @@ public class Main {
 
        // incorrect_data.show();
 
-        incorrect_data.join(expedia, incorrect_data.col("hotel_id").equalTo(expedia.col("id"))).select("*").show(20);
+        incorrect_data.join(expedia, incorrect_data.col("hotel_id").equalTo(expedia.col("hotel_id"))).select("*").show(20);
 
 //        Dataset<Row> correct_data = df2.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
 //                .where(df2.col("diff").isNull()
