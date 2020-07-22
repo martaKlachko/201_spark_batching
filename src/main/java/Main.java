@@ -84,7 +84,7 @@ public class Main {
 
         correct_group_by_city.show();
 
-        correct_data.withColumn("ci_year", correct_data.col("srch_ci").substr(0,4)).repartition(10, "ci_year")
+        correct_data.withColumn("ci_year", correct_data.col("srch_ci").substr(0,4)).coalesce(5)
                 .write().partitionBy("ci_year")
                 .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output");
 
