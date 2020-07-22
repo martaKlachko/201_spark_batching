@@ -27,44 +27,42 @@ public class TaskUtil {
 
     }
 
-    static Dataset<Row> expedia_windoved_data(Dataset<Row> expedia) {
+    static Dataset<Row> window_data(Dataset<Row> dataset) {
         WindowSpec window = Window.partitionBy("hotel_id").orderBy("hotel_id");
-        Dataset<Row> df = expedia
+        Dataset<Row> df = dataset
                 .orderBy("hotel_id", "srch_ci")
                 .withColumn("lag_day", functions.lag("srch_ci", 1)
                         .over(window));
 
-        Dataset<Row> result = df
+        return df
                 .withColumn("diff", functions.datediff(df.col("srch_ci"), df.col("lag_day")));
 
 
-        return result;
-
     }
 
-    static Dataset<Row> invalid_expedia_data(Dataset<Row> expedia, Dataset<Row> hotels) {
-        Dataset<Row> df = expedia.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
-                .where(expedia.col("diff").isNotNull()
-                        .and(expedia.col("diff").$greater(2)
-                                .and(expedia.col("diff").$less(30)))).persist();
+    static Dataset<Row> invalid_data(Dataset<Row> dataset, Dataset<Row> hotels) {
+        Dataset<Row> df = dataset.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+                .where(dataset.col("diff").isNotNull()
+                        .and(dataset.col("diff").$greater(2)
+                                .and(dataset.col("diff").$less(30)))).persist();
 
 
         return df.join(hotels, df.col("hotel_id").equalTo(hotels.col("id")))
                 .select("Name", "country", "city", "address").distinct();
-        
-    }
-
-    static Dataset<Row> valid_expedia_data(Dataset<Row> expedia, Dataset<Row> hotels) {
-        return expedia.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
-                .where(expedia.col("diff").isNull()
-                        .or(expedia.col("diff").$less(2)
-                                .or(expedia.col("diff").$greater(30))));
 
     }
 
+    static Dataset<Row> valid_data(Dataset<Row> dataset) {
+        return dataset.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+                .where(dataset.col("diff").isNull()
+                        .or(dataset.col("diff").$less(2)
+                                .or(dataset.col("diff").$greater(30))));
 
-    static Dataset<Row> group_by_column(Dataset<Row> dataset, Dataset<Row> hotels, String column) {
-        return  dataset.withColumnRenamed("id", "data_id")
+    }
+
+
+    static Dataset<Row> group_by_column_and_join_hotels(Dataset<Row> dataset, Dataset<Row> hotels, String column) {
+        return dataset.withColumnRenamed("id", "data_id")
                 .join(hotels, dataset.col("hotel_id").equalTo(hotels.col("id")))
                 .groupBy(column).agg(functions.count("id").as("count"));
 
