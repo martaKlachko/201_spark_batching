@@ -85,8 +85,8 @@ public class Main {
         correct_group_by_city.show();
 
         correct_data.withColumn("ci_year", correct_data.col("srch_ci").substr(0,4))
-                .write().format("com.databricks.spark.avro").partitionBy("ci_year")
-                .save("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output");
+                .write().partitionBy("ci_year")
+                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output");
 
 
 
