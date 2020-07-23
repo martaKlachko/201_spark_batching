@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Valid data, grouped by city");
         grouped_by_city.show();
 
-     
+
         TaskUtil.write(valid_expedia_data,path);
 
 
