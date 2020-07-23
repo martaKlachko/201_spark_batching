@@ -36,8 +36,13 @@ public class Main {
                 "Vincci Gala, ES, Barselona "};
 
 
-        for (String d:data
+        for (Row d:grouped_by_city.collect()
              ) {
+            System.out.println(d);
+        }
+
+        for (String d:data
+        ) {
             System.out.println(d);
         }
 
