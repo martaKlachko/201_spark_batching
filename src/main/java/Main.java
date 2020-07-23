@@ -35,7 +35,11 @@ public class Main {
                 "Park International Hotel, GB, London",
                 "Vincci Gala, ES, Barselona "};
 
-        System.out.println(data.toString());
+
+        for (String d:data
+             ) {
+            System.out.println(d);
+        }
 
 
 
