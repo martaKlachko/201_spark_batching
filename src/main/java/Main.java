@@ -33,7 +33,7 @@ public class Main {
                 "Hazlitt s, GB, London",
                 "Fairfield Inn & Suites Peoria East, US, East Peoria",
                 "Park International Hotel, GB, London",
-                "Vincci Gala, ES, Barselona "};
+                "Vincci Gala, ES, Barcelona "};
 
 
         for (Row d:grouped_by_city.collect()
