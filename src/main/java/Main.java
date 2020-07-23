@@ -28,28 +28,7 @@ public class Main {
         System.out.println("Valid data, grouped by city");
         grouped_by_city.show();
 
-        String[] data = {"Okko Hotels Paris Porte De Versailles, FR, Paris",
-                "The Litchfield Inn, US, Pawleys Island",
-                "Hazlitt s, GB, London",
-                "Fairfield Inn & Suites Peoria East, US, East Peoria",
-                "Park International Hotel, GB, London",
-                "Vincci Gala, ES, Barcelona "};
-
-
-        for (Row d:grouped_by_city.collect()
-             ) {
-            System.out.println(d);
-        }
-
-        for (String d:data
-        ) {
-            System.out.println(d);
-        }
-
-
-
-
-
+     
         TaskUtil.write(valid_expedia_data,path);
 
 
