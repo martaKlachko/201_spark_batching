@@ -68,11 +68,11 @@ public class TaskUtil {
 
     }
 
-    static void write_to_hdfs(Dataset<Row> dataset) {
+    static void write(Dataset<Row> dataset, String path) {
 
         dataset.withColumn("ci_year", dataset.col("srch_ci").substr(0, 4)).coalesce(5)
                 .write().partitionBy("ci_year")
-                .parquet("hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output");
+                .parquet(path);
 
     }
 

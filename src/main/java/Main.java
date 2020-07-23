@@ -12,6 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         SparkSession spark = SparkConfig.getSession();
+        String path = "hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output";
 
         Dataset<Row> hotels = TaskUtil.readCSV(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
         Dataset<Row> expedia = TaskUtil.readAvro(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia");
@@ -33,7 +34,7 @@ public class Main {
         grouped_by_city.show();
 
 
-        TaskUtil.write_to_hdfs(valid_expedia_data);
+        TaskUtil.write(valid_expedia_data, path);
 
 
         spark.stop();
