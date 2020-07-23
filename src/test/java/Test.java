@@ -88,7 +88,6 @@ public class Test {
     public void testValidData() {
 
         Dataset<Row> df = TaskUtil.readAvro(spark, "src/test/resources/3.avro");
-        //Dataset<Row> df1 = TaskUtil.readCSV(spark, "src/test/resources/1.csv");
 
         Row[] actual = TaskUtil.valid_data(df).collect();
 
