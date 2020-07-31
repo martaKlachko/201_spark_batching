@@ -52,13 +52,15 @@ public class TaskUtil {
     }
 
     static Dataset<Row> valid_data(Dataset<Row> dataset) {
-        return dataset.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+        Dataset<Row> result =  dataset.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
                 .withColumn("value",
                         functions.array("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
                                 .cast(DataTypes.StringType))
                 .where(dataset.col("diff").isNull()
                         .or(dataset.col("diff").$less(2)
                                 .or(dataset.col("diff").$greater(30))));
+        result.show();
+        return result;
 
     }
 
