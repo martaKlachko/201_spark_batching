@@ -1,9 +1,7 @@
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.*;
 import org.apache.spark.sql.expressions.Window;
 import org.apache.spark.sql.expressions.WindowSpec;
-import org.apache.spark.sql.functions;
+import scala.Tuple2;
 
 public class TaskUtil {
 
@@ -75,6 +73,7 @@ public class TaskUtil {
 //                .parquet(path);
 
         dataset.filter(dataset.col("srch_ci").substr(0, 4).equalTo("2017"))
+                .withColumn("value", dataset.col("hotel_id"))
                 .write()
                 .format("kafka")
                 .option("kafka.bootstrap.servers", "sandbox-hdp.hortonworks.com:6667")
