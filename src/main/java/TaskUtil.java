@@ -9,7 +9,7 @@ public class TaskUtil {
 
     static Dataset<Row> readCSV(SparkSession ss, String path) {
 
-        return ss.read().option("header", "true")
+        return ss.read().option("header", "true").option("inferSchema", true)
                 .csv(path);
     }
 
