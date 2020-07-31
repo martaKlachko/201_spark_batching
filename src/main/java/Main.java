@@ -9,8 +9,8 @@ public class Main {
         SparkSession spark = SparkConfig.getSession();
         String path = "hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia_output";
 
-        Dataset<Row> hotels = TaskUtil.readCSV(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/201_hotels");
-        Dataset<Row> expedia = TaskUtil.readAvro(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/201_expedia");
+        Dataset<Row> hotels = TaskUtil.readCSV(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/hotels");
+        Dataset<Row> expedia = TaskUtil.readAvro(spark, "hdfs://sandbox-hdp.hortonworks.com:8020/expedia");
 
 
         Dataset<Row> expedia_windowed_data = TaskUtil.window_data(expedia).persist();
