@@ -73,7 +73,7 @@ public class TaskUtil {
 //                .parquet(path);
 
         dataset.filter(dataset.col("srch_ci").substr(0, 4).equalTo("2017"))
-                .withColumn("value", dataset.col("hotel_id"))
+                .withColumnRenamed("id", "value")
                 .write()
                 .format("kafka")
                 .option("kafka.bootstrap.servers", "sandbox-hdp.hortonworks.com:6667")
