@@ -1,6 +1,7 @@
 import org.apache.spark.sql.*;
 import org.apache.spark.sql.expressions.Window;
 import org.apache.spark.sql.expressions.WindowSpec;
+import org.apache.spark.sql.types.DataTypes;
 import scala.Tuple2;
 
 public class TaskUtil {
@@ -52,7 +53,9 @@ public class TaskUtil {
 
     static Dataset<Row> valid_data(Dataset<Row> dataset) {
         return dataset.select("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
-                .withColumn("value", functions.array("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff"))
+                .withColumn("value",
+                        functions.array("id", "hotel_id", "srch_ci", "srch_co", "lag_day", "diff")
+                                .cast(DataTypes.StringType))
                 .where(dataset.col("diff").isNull()
                         .or(dataset.col("diff").$less(2)
                                 .or(dataset.col("diff").$greater(30))));
