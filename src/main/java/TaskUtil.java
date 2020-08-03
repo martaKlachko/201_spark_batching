@@ -74,17 +74,17 @@ public class TaskUtil {
 
     static void write(Dataset<Row> dataset, String path) {
 
-//        dataset.withColumn("ci_year", dataset.col("srch_ci").substr(0, 4)).coalesce(5)
-//                .write().partitionBy("ci_year")
-//                .parquet(path);
+        dataset.withColumn("ci_year", dataset.col("srch_ci").substr(0, 4)).coalesce(5)
+                .write().partitionBy("ci_year")
+                .parquet(path);
 
-        dataset.filter(dataset.col("srch_ci").substr(0, 4).equalTo("2017"))
-                .withColumnRenamed("id", "value")
-                .write()
-                .format("kafka")
-                .option("kafka.bootstrap.servers", "sandbox-hdp.hortonworks.com:6667")
-                .option("topic", "201_output")
-                .save();
+//        dataset.filter(dataset.col("srch_ci").substr(0, 4).equalTo("2017"))
+//                .withColumnRenamed("id", "value")
+//                .write()
+//                .format("kafka")
+//                .option("kafka.bootstrap.servers", "sandbox-hdp.hortonworks.com:6667")
+//                .option("topic", "201_output")
+//                .save();
 
 
     }
